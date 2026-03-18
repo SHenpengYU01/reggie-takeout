@@ -1,0 +1,81 @@
+version: '3.8'
+
+services:
+  # MySQL数据库服务
+  mysql:
+    image: mysql:8.0.31
+    container_name: takeout-mysql
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: takeout123!
+      MYSQL_DATABASE: ruiji
+      MYSQL_USER: takeout
+      MYSQL_PASSWORD: TakeOut123!
+    volumes:
+      - ./mysql/data:/var/lib/mysql
+      - ./mysql/conf:/etc/mysql/conf.d
+      - ./SQL文件/ruiji.sql:/docker-entrypoint-initdb.d/init.sql
+    ports:
+      - "3306:3306"
+    command: --default-authentication-plugin=mysql_native_password --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+
+  # Redis缓存服务
+  redis:
+    image: redis:7.0.5-alpine
+    container_name: takeout-redis
+    restart: always
+    ports:
+      - "6379:6379"
+    volumes:
+      - ./redis/data:/data
+      - ./redis/conf/redis.conf:/usr/local/etc/redis/redis.conf
+    command: redis-server /usr/local/etc/redis/redis.conf
+
+  # 后端应用服务
+  takeout-app:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: takeout-app
+    restart: always
+    ports:
+      - "9001:9001"
+    environment:
+      - SPRING_PROFILES_ACTIVE=prod
+    volumes:
+      - ./app/logs:/app/logs
+      - ./app/pic:/app/pic
+    depends_on:
+      - mysql
+      - redis
+    healthcheck:
+      test: ["CMD-SHELL", "curl -f http://localhost:9001/doc.html || exit 1"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+      start_period: 60s
+
+  # Nginx反向代理服务
+  nginx:
+    image: nginx:1.22.1-alpine
+    container_name: takeout-nginx
+    restart: always
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - ./nginx/conf.d:/etc/nginx/conf.d
+      - ./nginx/html:/usr/share/nginx/html
+      - ./nginx/logs:/var/log/nginx
+    depends_on:
+      - takeout-app
+    healthcheck:
+      test: ["CMD-SHELL", "nginx -t"]
+      interval: 30s
+      timeout: 10s
+      retries: 3
+
+volumes:
+  mysql:
+  redis:
+  app:

@@ -58,21 +58,21 @@ public class LoginCheckFilter implements Filter {
         }
         //判断用户已经登陆可以放行（PC后台版）
 
-        if (redisTemplate.opsForValue().get("employee")!= null){
+        if (httpServletRequest.getSession().getAttribute("employee") != null){
             log.info("后台用户已登录");
             filterChain.doFilter(httpServletRequest, httpServletResponse);
             //获取当前新增操作人员的id
-            Long empId= (Long) redisTemplate.opsForValue().get("employee");
+            Long empId= (Long) httpServletRequest.getSession().getAttribute("employee");
             //存入LocalThread
             BaseContext.setCurrentId(empId);
             //放行完了直接结束就行
             return;
         }//判断用户已经登陆可以放行（移动端前台版）
-        if (redisTemplate.opsForValue().get("user") != null){
+        if (httpServletRequest.getSession().getAttribute("user") != null){
             log.info("前台用户已登录");
             filterChain.doFilter(httpServletRequest, httpServletResponse);
             //获取当前新增操作人员的id
-            Long userId= (Long) redisTemplate.opsForValue().get("user");
+            Long userId= (Long) httpServletRequest.getSession().getAttribute("user");
             //存入LocalThread
             BaseContext.setCurrentId(userId);
             //放行完了直接结束就行

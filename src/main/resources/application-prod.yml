@@ -1,0 +1,49 @@
+server:
+  port: 9001
+
+spring:
+  application:
+    name: ccTakeOut
+  datasource:
+    druid:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://mysql:3306/ruiji?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&zeroDateTimeBehavior=convertToNull&useSSL=false&allowPublicKeyRetrieval=true
+      username: root
+      password: takeout123!
+  main:
+    allow-bean-definition-overriding: true
+
+  redis:
+    host: redis
+    port: 6379
+    password: takeout123!
+    database: 0
+    timeout: 3000ms
+  cache:
+    redis:
+      time-to-live: 1800000
+
+mybatis-plus:
+  configuration:
+    map-underscore-to-camel-case: true
+    log-impl: org.apache.ibatis.logging.slf4j.Slf4jImpl
+  global-config:
+    db-config:
+      id-type: ASSIGN_ID
+
+# 自定义的文件上传存储位置
+takeOutFile:
+  fileLocaltion: /app/pic/
+
+# 日志配置
+logging:
+  level:
+    root: INFO
+    com.takeout: DEBUG
+  pattern:
+    console: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+    file: "%d{yyyy-MM-dd HH:mm:ss} [%thread] %-5level %logger{36} - %msg%n"
+  file:
+    name: /app/logs/takeout-app.log
+    max-size: 10MB
+    max-history: 30

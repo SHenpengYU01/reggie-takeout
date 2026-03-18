@@ -103,10 +103,10 @@ public class UserController {
                 userService.save(user);
             }
             //把用户的ID存入Session，留给过滤器进行验证放行
-            //codeInSession.setAttribute("user", user.getId());
+            codeInSession.setAttribute("user", user.getId());
 
             //此时已经登陆成功，向Redis中存入userId的信息留给过滤器进行验证放行
-            redisTemplate.opsForValue().set("user", user.getId());
+            //redisTemplate.opsForValue().set("user", user.getId());
             //再删掉验证码
             redisTemplate.delete(phone);
 

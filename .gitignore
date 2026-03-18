@@ -1,0 +1,58 @@
+# IDE
+.idea/
+*.iml
+*.ipr
+*.iws
+.vscode/
+*.swp
+*.swo
+*~
+
+# Build outputs
+target/
+build/
+out/
+
+# Maven
+*.log
+.mvn/
+
+# Docker
+docker-compose.override.yml
+.dockerignore
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+logs/
+*.tmp
+
+# Config
+application-dev.yml
+application-test.yml
+*.properties
+*.env
+
+# Temporary files
+*.tmp
+*.temp
+.cache/
+
+# Database
+*.sql
+*.sql.gz
+*.dump
+
+# IDE files
+*.class
+*.classpath
+*.project
+*.settings/
+
+# Node/npm
+node_modules/
+package-lock.json
+yarn.lock
