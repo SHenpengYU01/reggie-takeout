@@ -45,6 +45,9 @@ application-test.yml
 *.sql
 *.sql.gz
 *.dump
+mysql/data/
+mysql/conf/
+mysql/logs/
 
 # IDE files
 *.class
