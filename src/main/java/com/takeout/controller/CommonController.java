@@ -24,9 +24,6 @@ public class CommonController {
     @Value("${takeOutFile.fileLocaltion}")
     private String fileLoaction;
 
-    //当前项目所处路径
-    private String sysDir = System.getProperty("user.dir");
-
     /**
      * 上传图片
      *
@@ -44,7 +41,7 @@ public class CommonController {
         String fileName = file.getOriginalFilename() + randomUUID + suffix;
 
         //保证存储的位置有这个文件夹
-        File dir = new File(sysDir + fileLoaction);
+        File dir = new File(fileLoaction);
         if (!dir.exists()) {
             //目标存储位置不存在，就创建一个文件夹
             dir.mkdirs();
@@ -52,7 +49,7 @@ public class CommonController {
 
         try {
             //转存文件到指定位置+文件的名称全拼
-            file.transferTo(new File(sysDir + fileLoaction + fileName));
+            file.transferTo(new File(fileLoaction + fileName));
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -71,7 +68,7 @@ public class CommonController {
     @GetMapping("/download")
     public void fileDownload(HttpServletResponse httpServletResponse, String name) throws IOException {
         //取得工程在系统的绝对路径+resource目录+文件名
-        String picDir = sysDir + fileLoaction + name;
+        String picDir = fileLoaction + name;
         //把刚刚存的文件读取到内存中，准备回显
         FileInputStream fileInputStream = new FileInputStream(picDir);
 
