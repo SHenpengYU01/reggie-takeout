@@ -1,61 +1,133 @@
-# IDE
+# ==================== IDE ====================
+# IntelliJ IDEA
 .idea/
 *.iml
 *.ipr
 *.iws
+
+# VS Code
 .vscode/
-*.swp
-*.swo
-*~
 
-# Build outputs
-target/
-build/
-out/
-
-# Maven
-*.log
-.mvn/
-
-# Docker
-docker-compose.override.yml
-.dockerignore
-
-# OS
-.DS_Store
-Thumbs.db
-
-# Logs
-*.log
-logs/
-*.tmp
-
-# Config
-application-dev.yml
-application-test.yml
-*.properties
-*.env
-
-# Temporary files
-*.tmp
-*.temp
-.cache/
-
-# Database
-*.sql
-*.sql.gz
-*.dump
-mysql/data/
-mysql/conf/
-mysql/logs/
-
-# IDE files
-*.class
+# Eclipse
 *.classpath
 *.project
 *.settings/
 
-# Node/npm
+# NetBeans
+nbproject/
+build/
+nbbuild/
+dist/
+nbdist/
+
+# ==================== Build Outputs ====================
+target/
+build/
+out/
+*.class
+
+# ==================== Maven ====================
+.mvn/
+mvnw
+mvnw.cmd
+pom.xml.tag
+pom.xml.releaseBackup
+pom.xml.versionsBackup
+pom.xml.next
+release.properties
+dependency-reduced-pom.xml
+buildNumber.properties
+.mvn/timing.properties
+.mvn/wrapper/maven-wrapper.jar
+
+# ==================== Gradle ====================
+.gradle/
+gradle-app.setting
+!gradle-wrapper.jar
+.gradletasknamecache
+
+# ==================== Docker ====================
+docker-compose.override.yml
+.dockerignore
+*.dockerignore
+
+# ==================== OS ====================
+.DS_Store
+.DS_Store?
+._*
+.Spotlight-V100
+.Trashes
+ehthumbs.db
+Thumbs.db
+desktop.ini
+
+# ==================== Logs ====================
+*.log
+logs/
+log/
+
+# ==================== Temporary Files ====================
+*.tmp
+*.temp
+*.swp
+*.swo
+*~
+.cache/
+
+# ==================== Config & Secrets ====================
+application-dev.yml
+application-test.yml
+application-local.yml
+*.env
+.env.local
+.env.*.local
+*.properties
+
+# ==================== Database ====================
+# 数据库数据文件
+mysql/data/
+mysql/logs/
+mysql/conf/
+postgres/data/
+redis/data/
+mongo/data/
+
+# 数据库备份文件
+*.sql
+*.sql.gz
+*.dump
+*.bak
+*.backup
+
+# ==================== Node/npm ====================
 node_modules/
 package-lock.json
 yarn.lock
+pnpm-lock.yaml
+
+# ==================== Testing ====================
+coverage/
+.nyc_output/
+pytest-results/
+test-results/
+
+# ==================== Deployment ====================
+*.pem
+*.key
+*.crt
+*.p12
+*.jks
+*.keystore
+*.truststore
+
+# ==================== Application ====================
+# 应用上传的文件
+app/pic/
+app/uploads/
+app/files/
+
+# ==================== Archive ====================
+*.zip
+*.tar.gz
+*.rar
+*.7z
