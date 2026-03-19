@@ -104,6 +104,46 @@ public class ShoppingCartController {
     }
 
     /**
+     * 购物车商品数量减少
+     * @param shoppingCart
+     * @return
+     */
+    @PostMapping("/sub")
+    public Result<ShoppingCart> sub(@RequestBody ShoppingCart shoppingCart) {
+        log.info("购物车数据:{}", shoppingCart.toString());
+
+        Long userId = BaseContext.getCurrentId();
+        shoppingCart.setUserId(userId);
+
+        Long dishId = shoppingCart.getDishId();
+        Long setmealId = shoppingCart.getSetmealId();
+
+        LambdaQueryWrapper<ShoppingCart> lambdaQueryWrapper = new LambdaQueryWrapper<>();
+        lambdaQueryWrapper.eq(ShoppingCart::getUserId, userId);
+
+        if (dishId != null) {
+            lambdaQueryWrapper.eq(ShoppingCart::getDishId, dishId);
+        }
+        if (setmealId != null) {
+            lambdaQueryWrapper.eq(ShoppingCart::getSetmealId, setmealId);
+        }
+
+        ShoppingCart cartServiceOne = shoppingCartService.getOne(lambdaQueryWrapper);
+
+        if (cartServiceOne != null) {
+            Integer count = cartServiceOne.getNumber();
+            if (count > 1) {
+                cartServiceOne.setNumber(count - 1);
+                shoppingCartService.updateById(cartServiceOne);
+            } else {
+                shoppingCartService.removeById(cartServiceOne.getId());
+            }
+        }
+
+        return Result.success(cartServiceOne);
+    }
+
+    /**
      * 一次性清空购物车
      * @return
      */
